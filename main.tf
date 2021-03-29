@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "azure-lab"
+  default = "analysis"
 }
 
 variable "location" {
@@ -8,24 +8,40 @@ variable "location" {
   default = "westus2"
 }
 
-resource "random_pet" "lab" {
-  length = 2
-}
-
 resource "random_integer" "lab" {
-  min = 1500
-  max = 6500
+  min = 150000
+  max = 650000
 }
 
 locals {
-  name = join("-", [var.name, random_pet.lab.id, random_integer.lab.id])
+  name = "${var.name}${random_integer.lab.id}"
 }
 
 resource "azurerm_resource_group" "lab" {
   name     = local.name
   location = var.location
+
   tags = {
     Name      = local.name
     Terraform = true
   }
+}
+
+resource "azurerm_storage_account" "lab" {
+  name                     = local.name
+  resource_group_name      = azurerm_resource_group.lab.name
+  location                 = azurerm_resource_group.lab.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  tags = {
+    Name      = local.name
+    Terraform = true
+  }
+}
+
+resource "azurerm_storage_container" "lab" {
+  name                  = local.name
+  storage_account_name  = azurerm_storage_account.lab.name
+  container_access_type = "private"
 }
