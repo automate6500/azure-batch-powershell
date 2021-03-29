@@ -19,6 +19,7 @@ No Modules.
 
 | Name |
 |------|
+| [azurerm_batch_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/batch_account) |
 | [azurerm_resource_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) |
 | [azurerm_storage_account](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) |
 | [azurerm_storage_container](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container) |

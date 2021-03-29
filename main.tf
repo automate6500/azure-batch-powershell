@@ -45,3 +45,16 @@ resource "azurerm_storage_container" "lab" {
   storage_account_name  = azurerm_storage_account.lab.name
   container_access_type = "private"
 }
+
+resource "azurerm_batch_account" "lab" {
+  name                 = local.name
+  resource_group_name  = azurerm_resource_group.lab.name
+  location             = azurerm_resource_group.lab.location
+  storage_account_id   = azurerm_storage_account.lab.id
+  pool_allocation_mode = "UserSubscription"
+
+  tags = {
+    Name      = local.name
+    Terraform = true
+  }
+}
